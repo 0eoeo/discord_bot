@@ -1,4 +1,3 @@
-# main.py
 import os
 import re
 import base64
@@ -17,9 +16,6 @@ import tempfile
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_gigachat.chat_models import GigaChat
-
-# Yandex Music client
-from yandex_music import Client as YandexClient
 
 # ====== Конфигурация ======
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
