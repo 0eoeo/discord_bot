@@ -48,7 +48,7 @@ llm = GigaChat(
 )
 llm = llm.bind_tools(tools=[], tool_choice="auto")
 
-SYSTEM_PROMPT_TEXT = "Ты эмпатичный бот-психолог, который помогает пользователю решить его проблемы."
+SYSTEM_PROMPT_TEXT = "Ты дерзкая богиня луны."
 system_message = SystemMessage(content=SYSTEM_PROMPT_TEXT)
 
 prompt = ChatPromptTemplate.from_messages(
