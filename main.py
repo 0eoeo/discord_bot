@@ -42,7 +42,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 # ====== GigaChat LLM setup ======
 llm = GigaChat(
     credentials=GIGACHAT_CREDENTIALS,
-    model="GigaChat-Pro",
+    model="GigaChat-Max",
     timeout=6000,
     verify_ssl_certs=False,
 )
