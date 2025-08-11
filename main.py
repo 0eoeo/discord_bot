@@ -62,45 +62,6 @@ prompt = ChatPromptTemplate.from_messages(
 conversations: dict[int, list] = {}  # история по пользователям
 IMG_TAG_REGEX = re.compile(r'<img\s+src="([^"]+)"(?:\s+fuse="true")?\s*/?>', flags=re.IGNORECASE)
 
-# ====== Yandex client (blocking) ======
-yandex_client = None
-if YANDEX_LOGIN and YANDEX_PASSWORD:
-    try:
-        yandex_client = YandexClient().init()
-    except Exception as e:
-        print("WARN: Не удалось авторизоваться в Yandex Music:", e)
-        yandex_client = None
-
-# ====== Music helper functions ======
-
-def yandex_search_and_get_track(query: str):
-    """
-    Blocking function: ищет трек и возвращает объект track (yandex-music Track)
-    """
-    if not yandex_client:
-        raise RuntimeError("Yandex client не инициализирован")
-    res = yandex_client.search(query, type_="track", nocorrect=False)
-    if not (res and res.tracks and res.tracks.results):
-        return None
-    # первый релевантный результат
-    track = res.tracks.results[0]
-    return track
-
-def yandex_get_stream_url_if_possible(track):
-    """
-    Попытка получить прямой потоковый URL для трека.
-    Возвращает None, если не удалось.
-    """
-    try:
-        info = yandex_client.tracks_download_info(track.id, track.album_id)
-        if isinstance(info, dict):
-            for key in ("src", "download_url", "link"):
-                if key in info and info[key]:
-                    return info[key]
-        return None
-    except Exception:
-        return None
-
 # ====== GigaChat image generation helper (sync) ======
 
 def generate_image_and_description_sync(prompt_text: str):
