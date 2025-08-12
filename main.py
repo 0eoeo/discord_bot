@@ -21,8 +21,6 @@ from langchain_gigachat.chat_models import GigaChat
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 CHANNEL_ID = int(os.getenv("CHANNEL_ID", "0") or 0)
 GIGACHAT_CREDENTIALS = os.getenv("GIGACHAT_CREDENTIALS", "")
-YANDEX_LOGIN = os.getenv("YANDEX_LOGIN")
-YANDEX_PASSWORD = os.getenv("YANDEX_PASSWORD")
 PORT = int(os.getenv("PORT", "8080"))
 
 if not DISCORD_TOKEN:
@@ -31,8 +29,6 @@ if CHANNEL_ID == 0:
     raise SystemExit("Нужно указать CHANNEL_ID в окружении")
 if not GIGACHAT_CREDENTIALS:
     raise SystemExit("Нужно указать GIGACHAT_CREDENTIALS в окружении")
-if not (YANDEX_LOGIN and YANDEX_PASSWORD):
-    print("WARN: YANDEX credentials не заданы — команды воспроизведения музыки будут недоступны")
 
 # ====== Discord bot ======
 intents = discord.Intents.default()
@@ -42,7 +38,6 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 # ====== GigaChat LLM setup ======
 llm = GigaChat(
     credentials=GIGACHAT_CREDENTIALS,
-    model="GigaChat-Max",
     timeout=6000,
     verify_ssl_certs=False,
 )
