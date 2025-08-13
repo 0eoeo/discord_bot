@@ -170,6 +170,11 @@ async def on_message(message: discord.Message):
         return
 
     # Важно обрабатывать команды *после* проверки (иначе может быть рекурсия)
+    ctx = await bot.get_context(message)
+    if ctx.valid:
+        await bot.process_commands(message)
+        return
+
     await bot.process_commands(message)
 
     if message.channel.id != CHANNEL_ID:
